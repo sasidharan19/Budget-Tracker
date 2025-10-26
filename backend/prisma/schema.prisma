@@ -38,6 +38,7 @@ model Transaction {
   userId      Int
   category    Category   @relation(fields: [categoryId], references: [id])
   categoryId  Int
+  createdAt   DateTime     @default(now())
 }
 
 model Budget {
@@ -46,6 +47,8 @@ model Budget {
   amount    Float
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
+  createdAt DateTime @default(now())
+  @@unique([userId, month])
 }
 
 enum CategoryType {

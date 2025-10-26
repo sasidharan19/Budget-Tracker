@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from '../utils/prisma.client';
 import bcrypt from "bcryptjs";
 import { signJwt } from "../utils/jwt.util";
 
-const prisma = new PrismaClient();
 
 export async function loginUser(username: string, password: string) {
   const user = await prisma.user.findUnique({ where: { username } });
@@ -11,6 +10,6 @@ export async function loginUser(username: string, password: string) {
   const match = await bcrypt.compare(password, user.passwordHash);
   if (!match) return null;
 
-  const token = signJwt({ userId: user.id, username: user.username });
+  const token = signJwt({ id: user.id, username: user.username });
   return { token, user: { id: user.id, username: user.username } };
 }

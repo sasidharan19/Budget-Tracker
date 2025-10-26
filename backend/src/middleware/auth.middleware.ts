@@ -1,20 +1,16 @@
 import { Request, Response, NextFunction } from "express";
-import { verifyJwt } from "../utils/jwt.util";
+import jwt from "jsonwebtoken";
 
-export interface AuthRequest extends Request {
-  user?: { userId: number; username: string };
-}
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "No token provided" });
 
-export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) return res.status(401).json({ message: "Unauthorized" });
-
-  const token = authHeader.substring(7);
   try {
-    const payload = verifyJwt(token);
-    req.user = payload as any;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number; username: string };
+    req.user = { id: decoded.id, username: decoded.username };
+    console.log('req.user',req.user);
     next();
   } catch (err) {
     return res.status(401).json({ message: "Invalid token" });
   }
-}
+};
