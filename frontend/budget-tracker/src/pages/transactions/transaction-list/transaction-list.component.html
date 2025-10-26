@@ -1,0 +1,111 @@
+<div class="min-h-screen bg-indigo-50 flex justify-center py-10">
+  <div class="w-full max-w-6xl bg-white shadow-lg rounded-lg p-6">
+    <!-- Header + Add Button -->
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">Transactions</h2>
+      <button
+        (click)="navigateToNew()"
+        class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded shadow"
+      >
+        + Add Transaction
+      </button>
+    </div>
+
+    <!-- Filter Form -->
+    <form
+      [formGroup]="form"
+      (ngSubmit)="applyFilters()"
+      class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6"
+    >
+      <input type="date" formControlName="from" class="border rounded px-3 py-2 focus:ring-2 focus:ring-indigo-400" placeholder="From date"/>
+      <input type="date" formControlName="to" class="border rounded px-3 py-2 focus:ring-2 focus:ring-indigo-400" placeholder="To date"/>
+      <input type="number" formControlName="categoryId" class="border rounded px-3 py-2" placeholder="Category ID"/>
+      <select formControlName="type" class="border rounded px-3 py-2">
+        <option value="">All Types</option>
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+      <input type="number" formControlName="minAmount" class="border rounded px-3 py-2" placeholder="Min Amount"/>
+      <input type="number" formControlName="maxAmount" class="border rounded px-3 py-2" placeholder="Max Amount"/>
+      <div class="col-span-1 sm:col-span-3 md:col-span-1 flex gap-2">
+        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded shadow">
+          Apply
+        </button>
+        <button type="button" (click)="clearFilters()" class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">
+          Clear
+        </button>
+      </div>
+    </form>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="text-center text-gray-500 font-medium py-4">
+      Loading transactions...
+    </div>
+
+    <!-- Transaction Table -->
+    <div *ngIf="!loading" class="overflow-x-auto">
+      <table class="min-w-full border border-gray-200 rounded-lg">
+        <thead class="bg-gray-100">
+          <tr class="text-left text-gray-700">
+            <th class="px-4 py-2">Date</th>
+            <th class="px-4 py-2">Category</th>
+            <th class="px-4 py-2">Type</th>
+            <th class="px-4 py-2">Amount</th>
+            <th class="px-4 py-2">Description</th>
+            <th class="px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of transactions" class="hover:bg-gray-50 border-b border-gray-200">
+            <td class="px-4 py-2">{{ t.date | date:'mediumDate' }}</td>
+            <td class="px-4 py-2">{{ t.categoryId }}</td>
+            <td class="px-4 py-2">
+              <span
+                class="px-2 py-1 rounded-full text-white text-sm"
+                [ngClass]="{
+                  'bg-green-500': t.type === 'income',
+                  'bg-red-500': t.type === 'expense'
+                }"
+              >
+                {{ t.type | titlecase }}
+              </span>
+            </td>
+            <td class="px-4 py-2 font-medium">{{ t.amount | currency }}</td>
+            <td class="px-4 py-2">{{ t.description }}</td>
+            <td class="px-4 py-2 flex gap-2">
+              <button (click)="edit(t.id!)" class="text-indigo-600 hover:text-indigo-800 font-semibold">
+                Edit
+              </button>
+              <button (click)="delete(t.id!)" class="text-red-600 hover:text-red-800 font-semibold">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-between items-center mt-6">
+      <div class="text-gray-700 font-medium">
+        Showing page {{ page }} — total {{ total }}
+      </div>
+      <div class="flex gap-2">
+        <button
+          (click)="prev()"
+          class="px-3 py-1 border rounded hover:bg-gray-100 disabled:opacity-50"
+          [disabled]="page === 1"
+        >
+          Prev
+        </button>
+        <button
+          (click)="next()"
+          class="px-3 py-1 border rounded hover:bg-gray-100 disabled:opacity-50"
+          [disabled]="page * limit >= total"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
