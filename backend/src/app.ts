@@ -16,6 +16,6 @@ app.use("/api/auth", authRoutes);
 app.use('/api/categories', authMiddleware, categoryRoutes);
 app.use('/api/transactions', authMiddleware, transactionRoutes);
 app.use('/api/budgets', authMiddleware, budgetRoutes);
-app.use('/api/summary', authMiddleware, budgetRoutes);
+app.use('/api/budgets', authMiddleware, budgetRoutes);
 
 export default app;

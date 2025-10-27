@@ -1,1 +1,43 @@
-<p>budget works!</p>
+<div class="min-h-screen bg-indigo-50 flex justify-center py-10 px-4">
+  <div class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-semibold">Budget</h2>
+      <input type="month" [value]="form?.value?.month" (change)="form.patchValue({month: $any($event.target).value}); load()" class="border rounded px-3 py-2"/>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="save()" class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+      <div class="sm:col-span-2">
+        <label class="block text-sm text-gray-600">Budget Amount</label>
+        <input formControlName="amount" type="number" class="w-full border rounded px-3 py-2" />
+      </div>
+      <div class="flex items-end">
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">
+          Set / Update
+        </button>
+      </div>
+    </form>
+
+    <div class="mb-6">
+      <h3 class="text-lg font-medium mb-2">Summary</h3>
+      <div class="flex gap-4">
+        <div class="p-3 bg-gray-50 rounded">
+          <div class="text-sm text-gray-500">Budget</div>
+          <div class="text-xl font-semibold">{{ budget?.amount | currency }}</div>
+        </div>
+        <div class="p-3 bg-gray-50 rounded">
+          <div class="text-sm text-gray-500">Actual Expenses</div>
+          <div class="text-xl font-semibold">{{ summary?.expense | currency }}</div>
+        </div>
+        <div class="p-3 bg-gray-50 rounded">
+          <div class="text-sm text-gray-500">Remaining</div>
+          <div class="text-xl font-semibold">{{ (budget?.amount - summary?.expense) | currency }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="text-lg font-medium mb-2">Budget vs Actual</h3>
+      <div #barChart class="w-full"></div>
+    </div>
+  </div>
+</div>

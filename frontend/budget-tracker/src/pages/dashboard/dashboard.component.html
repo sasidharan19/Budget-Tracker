@@ -1,1 +1,41 @@
-<p>dashboard works!</p>
+<div class="min-h-screen bg-indigo-50 flex justify-center py-10 px-4">
+  <div class="w-full max-w-6xl bg-white rounded-2xl shadow-xl p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold">Dashboard</h1>
+      <input type="month" [value]="month" (change)="onMonthChange($event)" class="border rounded px-3 py-2"/>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="p-4 bg-gray-50 rounded-lg">
+        <div class="text-sm text-gray-500">Total Income</div>
+        <div class="text-2xl font-semibold text-green-700">{{ summary?.income | currency }}</div>
+      </div>
+      <div class="p-4 bg-gray-50 rounded-lg">
+        <div class="text-sm text-gray-500">Total Expense</div>
+        <div class="text-2xl font-semibold text-red-600">{{ summary?.expense | currency }}</div>
+      </div>
+      <div class="p-4 bg-gray-50 rounded-lg">
+        <div class="text-sm text-gray-500">Balance</div>
+        <div class="text-2xl font-semibold">{{ summary?.balance | currency }}</div>
+      </div>
+    </div>
+
+    <div class="md:flex md:gap-6">
+      <div class="md:w-1/2">
+        <h3 class="text-lg font-medium mb-2">Expense distribution</h3>
+        <div #pieChart class="flex items-center justify-center"></div>
+      </div>
+
+      <div class="md:w-1/2">
+        <h3 class="text-lg font-medium mb-2">Top categories</h3>
+        <ul *ngIf="summary?.byCategory?.length" class="space-y-2">
+          <li *ngFor="let c of summary?.byCategory" class="flex justify-between bg-gray-50 p-3 rounded">
+            <div class="font-medium">{{ c.categoryName }}</div>
+            <div class="text-gray-700 font-semibold">{{ c.amount | currency }}</div>
+          </li>
+        </ul>
+        <div *ngIf="!summary?.byCategory?.length" class="text-gray-500">No expense data for selected month.</div>
+      </div>
+    </div>
+  </div>
+</div>
