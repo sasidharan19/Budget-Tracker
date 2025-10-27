@@ -79,7 +79,7 @@ export class TransactionListComponent implements OnInit {
   }
 
   edit(id: number) {
-    this.router.navigate(['/transactions', id, 'edit']);
+    this.router.navigate(['/transactions', 'edit', id]);
   }
 
   delete(id: number) {

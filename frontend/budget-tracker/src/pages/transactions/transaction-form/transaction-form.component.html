@@ -1,41 +1,85 @@
-<div class="max-w-2xl mx-auto p-4">
-  <h2 class="text-2xl font-semibold mb-4">{{ isEdit ? 'Edit' : 'Add' }} Transaction</h2>
+<div class="min-h-screen bg-indigo-50 flex justify-center py-10">
+  <div class="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-8">
+    <!-- Header -->
+    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+      {{ isEdit ? 'Edit Transaction' : 'Add New Transaction' }}
+    </h2>
 
-  <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
-    <div>
-      <label class="block text-sm">Category</label>
-      <input formControlName="categoryId" placeholder="Category Id (use id for now)" class="w-full border rounded px-3 py-2" />
-      <!-- Ideally this would be a select loaded from categories API -->
-    </div>
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-5">
+      <!-- Category -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Category</label>
+        <input
+          formControlName="categoryId"
+          type="number"
+          placeholder="Enter Category ID"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        />
+      </div>
 
-    <div>
-      <label class="block text-sm">Type</label>
-      <select formControlName="type" class="w-full border rounded px-3 py-2">
-        <option value="expense">Expense</option>
-        <option value="income">Income</option>
-      </select>
-    </div>
+      <!-- Type -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Type</label>
+        <select
+          formControlName="type"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        >
+          <option value="expense">Expense</option>
+          <option value="income">Income</option>
+        </select>
+      </div>
 
-    <div>
-      <label class="block text-sm">Amount</label>
-      <input type="number" step="0.01" formControlName="amount" class="w-full border rounded px-3 py-2" />
-    </div>
+      <!-- Amount -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Amount</label>
+        <input
+          type="number"
+          step="0.01"
+          formControlName="amount"
+          placeholder="Enter amount"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        />
+      </div>
 
-    <div>
-      <label class="block text-sm">Date</label>
-      <input type="date" formControlName="date" class="w-full border rounded px-3 py-2" />
-    </div>
+      <!-- Date -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Date</label>
+        <input
+          type="date"
+          formControlName="date"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        />
+      </div>
 
-    <div>
-      <label class="block text-sm">Description</label>
-      <input formControlName="description" class="w-full border rounded px-3 py-2" />
-    </div>
+      <!-- Description -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Description</label>
+        <textarea
+          formControlName="description"
+          rows="3"
+          placeholder="Enter a short description"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none resize-none"
+        ></textarea>
+      </div>
 
-    <div class="flex gap-2">
-      <button type="submit" [disabled]="form.invalid || loading" class="bg-indigo-600 text-white px-4 py-2 rounded">
-        {{ isEdit ? 'Update' : 'Save' }}
-      </button>
-      <button type="button" (click)="cancel()" class="px-4 py-2 rounded border">Cancel</button>
-    </div>
-  </form>
+      <!-- Buttons -->
+      <div class="flex justify-end gap-3 pt-4">
+        <button
+          type="button"
+          (click)="cancel()"
+          class="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          [disabled]="form.invalid || loading"
+          class="px-5 py-2 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 disabled:opacity-50 transition"
+        >
+          {{ isEdit ? 'Update Transaction' : 'Save Transaction' }}
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

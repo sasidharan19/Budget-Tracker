@@ -35,9 +35,13 @@ export async function getTransaction(id: number, userId: number) {
 }
 
 export async function updateTransaction(id: number, userId: number, data: Partial<Prisma.TransactionUpdateInput>) {
+  const payload = {
+    ...data,
+    date: data.date ? new Date(data.date as any).toISOString() : undefined
+  };
   return prisma.transaction.updateMany({
     where: { id, userId },
-    data,
+    data: payload,
   });
 }
 

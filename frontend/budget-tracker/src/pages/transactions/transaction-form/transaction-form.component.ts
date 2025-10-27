@@ -1,10 +1,9 @@
-// src/app/transactions/transaction-form.component.ts
-import { Component, inject } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TransactionService, TransactionDto } from '../../../services/transaction.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, switchMap, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-transaction-form',
@@ -12,7 +11,7 @@ import { Observable, switchMap, of } from 'rxjs';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './transaction-form.component.html',
 })
-export class TransactionFormComponent {
+export class TransactionFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private txService = inject(TransactionService);
   private router = inject(Router);
@@ -21,16 +20,16 @@ export class TransactionFormComponent {
   form = this.fb.group({
     categoryId: [undefined as any, Validators.required],
     amount: [0, [Validators.required, Validators.min(0.01)]],
-    date: [new Date().toISOString().slice(0,10), Validators.required],
+    date: [new Date().toISOString().slice(0, 10), Validators.required],
     description: [''],
-    type: ['expense', Validators.required]
+    type: ['expense', Validators.required],
   });
 
   id?: number;
   loading = false;
   isEdit = false;
 
-  constructor() {
+  ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
       this.isEdit = true;
@@ -40,35 +39,42 @@ export class TransactionFormComponent {
   }
 
   loadTransaction(id: number) {
+    this.loading = true;
     this.txService.get(id).subscribe({
       next: (tx) => {
-        // format date to yyyy-mm-dd for input[type=date]
-        const d = tx.date ? tx.date.slice(0,10) : new Date().toISOString().slice(0,10);
+        const d = tx.date ? tx.date.slice(0, 10) : new Date().toISOString().slice(0, 10);
         this.form.patchValue({
           categoryId: tx.categoryId,
           amount: tx.amount,
           date: d,
           description: tx.description,
-          type: tx.type
+          type: tx.type,
         });
-      }
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.loading = false;
+      },
     });
   }
 
-    submit() {
+  submit() {
     if (this.form.invalid) return;
     this.loading = true;
+
     const payload: TransactionDto = {
       categoryId: Number(this.form.value.categoryId),
       amount: Number(this.form.value.amount),
-      date: this.form.value.date ?? new Date().toISOString().slice(0,10),
+      date: this.form.value.date ?? new Date().toISOString().slice(0, 10),
       description: this.form.value.description ?? undefined,
-      type: (this.form.value.type ?? 'expense') as 'income' | 'expense'
+      type: (this.form.value.type ?? 'expense') as 'income' | 'expense',
     };
 
-    const request$: Observable<any> = this.isEdit && this.id ?
-      this.txService.update(this.id, payload) :
-      this.txService.create(payload);
+    const request$: Observable<any> =
+      this.isEdit && this.id
+        ? this.txService.update(this.id, payload)
+        : this.txService.create(payload);
 
     request$.subscribe({
       next: () => {
@@ -79,7 +85,7 @@ export class TransactionFormComponent {
         console.error(err);
         this.loading = false;
         alert(err?.error?.message || 'Save failed');
-      }
+      },
     });
   }
 

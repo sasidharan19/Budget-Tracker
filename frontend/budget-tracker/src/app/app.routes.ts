@@ -11,6 +11,7 @@ export const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'transactions', component: TransactionListComponent },
   { path: 'transactions/new', component: TransactionFormComponent },
+  { path: 'transactions/edit/:id', component: TransactionFormComponent },
   { path: '', redirectTo: 'transactions', pathMatch: 'full' },
   { path: 'budget', component: BudgetComponent },
 ];
