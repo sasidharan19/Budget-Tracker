@@ -1,0 +1,61 @@
+<div class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow">
+  <h2 class="text-xl font-semibold mb-4 text-center">Manage Categories</h2>
+
+  <!-- Form -->
+  <form [formGroup]="categoryForm" (ngSubmit)="addCategory()" class="flex gap-2 mb-6">
+    <input
+      type="text"
+      formControlName="name"
+      placeholder="Category name"
+      class="border p-2 rounded flex-1 focus:ring-2 focus:ring-indigo-500 outline-none"
+    />
+    <select
+      formControlName="type"
+      class="border p-2 rounded focus:ring-2 focus:ring-indigo-500 outline-none"
+    >
+      <option value="expense">Expense</option>
+      <option value="income">Income</option>
+    </select>
+    <button
+      type="submit"
+      [disabled]="categoryForm.invalid"
+      class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 disabled:opacity-50"
+    >
+      Add
+    </button>
+  </form>
+
+  <!-- Loader -->
+  <div *ngIf="loading" class="text-gray-500 text-center">Loading...</div>
+
+  <!-- Categories List -->
+  <ul *ngIf="!loading && categories.length > 0" class="space-y-2">
+    <li
+      *ngFor="let c of categories"
+      class="flex justify-between items-center bg-gray-50 hover:bg-gray-100 p-3 rounded transition"
+    >
+      <div>
+        <span class="font-medium text-gray-800">{{ c.name }}</span>
+        <span
+          class="text-xs font-semibold uppercase ml-2 px-2 py-0.5 rounded-full"
+          [ngClass]="{
+            'bg-green-100 text-green-700': c.type === 'income',
+            'bg-red-100 text-red-700': c.type === 'expense'
+          }"
+        >
+          {{ c.type }}
+        </span>
+      </div>
+      <button
+        (click)="deleteCategory(c.id!)"
+        class="text-red-500 hover:text-red-700 font-medium"
+      >
+        Delete
+      </button>
+    </li>
+  </ul>
+
+  <div *ngIf="!loading && categories.length === 0" class="text-gray-500 text-center">
+    No categories added yet.
+  </div>
+</div>

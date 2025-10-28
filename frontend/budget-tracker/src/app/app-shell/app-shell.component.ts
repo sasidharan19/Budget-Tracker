@@ -19,7 +19,8 @@ export class AppShellComponent {
   links = [
     { label: 'Dashboard', path: '/dashboard', icon: this.iconDashboard() },
     { label: 'Transactions', path: '/transactions', icon: this.iconTransactions() },
-    { label: 'Budget', path: '/budget', icon: this.iconBudget() }
+    { label: 'Budget', path: '/budget', icon: this.iconBudget() },
+    { label: 'Categories', path: '/categories', icon: this.iconCategories() },
   ];
 
   toggleMobile() {
@@ -42,4 +43,12 @@ export class AppShellComponent {
   private iconBudget() {
     return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 8v8M7 4h10v16H7z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   }
+
+  private iconCategories() {
+    return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path d="M4 6h16M4 12h16M4 18h16"
+        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`;
+  }
+
 }

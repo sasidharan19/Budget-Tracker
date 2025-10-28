@@ -12,3 +12,13 @@ export async function postCategory(req: Request, res: Response) {
   const cat = await CategoryService.createCategory({ name, type });
   res.status(201).json(cat);
 }
+
+export async function deleteCategory(req: Request, res: Response) {
+  const id = Number(req.params.id);
+  if (!id) return res.status(400).json({ message: 'Invalid ID' });
+
+  const deleted = await CategoryService.deleteCategory(id);
+  if (!deleted) return res.status(404).json({ message: 'Category not found' });
+
+  res.json({ message: 'Category deleted successfully' });
+}

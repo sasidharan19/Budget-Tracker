@@ -1,14 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { TransactionService, TransactionDto } from '../../../services/transaction.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { CategoryService } from '../../../services/category.service';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-transaction-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './transaction-form.component.html',
 })
 export class TransactionFormComponent implements OnInit {
@@ -16,7 +17,12 @@ export class TransactionFormComponent implements OnInit {
   private txService = inject(TransactionService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private categoryService = inject(CategoryService);
 
+  categories: any[] = [];
+  noCategories = false;
+
+  // main transaction form
   form = this.fb.group({
     categoryId: [undefined as any, Validators.required],
     amount: [0, [Validators.required, Validators.min(0.01)]],
@@ -25,11 +31,19 @@ export class TransactionFormComponent implements OnInit {
     type: ['expense', Validators.required],
   });
 
+  // inline category add form
+  categoryForm: FormGroup = this.fb.group({
+    name: ['', Validators.required],
+    type: ['expense', Validators.required],
+  });
+
   id?: number;
   loading = false;
   isEdit = false;
 
   ngOnInit(): void {
+    this.loadCategories();
+
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
       this.isEdit = true;
@@ -38,7 +52,21 @@ export class TransactionFormComponent implements OnInit {
     }
   }
 
-  loadTransaction(id: number) {
+  private loadCategories() {
+    this.categoryService.getCategories().subscribe({
+      next: (res) => {
+        this.categories = res || [];
+        this.noCategories = this.categories.length === 0;
+      },
+      error: (err) => {
+        console.error('Error loading categories', err);
+        this.categories = [];
+        this.noCategories = true;
+      },
+    });
+  }
+
+  private loadTransaction(id: number) {
     this.loading = true;
     this.txService.get(id).subscribe({
       next: (tx) => {
@@ -55,6 +83,23 @@ export class TransactionFormComponent implements OnInit {
       error: (err) => {
         console.error(err);
         this.loading = false;
+      },
+    });
+  }
+
+  addCategoryInline() {
+    if (this.categoryForm.invalid) return;
+    const data = this.categoryForm.value;
+
+    this.categoryService.addCategory(data).subscribe({
+      next: () => {
+        this.categoryForm.reset({ type: 'expense' });
+        this.loadCategories();
+        alert('Category added successfully!');
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Failed to add category');
       },
     });
   }
