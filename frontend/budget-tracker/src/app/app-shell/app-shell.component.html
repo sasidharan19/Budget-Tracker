@@ -1,0 +1,104 @@
+<!-- App Shell -->
+<div class="min-h-screen bg-gradient-to-r from-indigo-900 via-indigo-800 to-indigo-700 text-gray-900">
+  <div class="min-h-screen flex">
+
+    <!-- Sidebar (desktop) -->
+    <aside class="hidden md:flex md:flex-col w-54 bg-white/5 backdrop-blur p-4 gap-4">
+      <div class="flex items-center gap-3 px-2">
+        <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+          <!-- small logo -->
+          <span class="text-white font-bold">BT</span>
+        </div>
+        <div>
+          <div class="text-white font-semibold">Budget Tracker</div>
+          <div class="text-xs text-slate-200">Personal Finance</div>
+        </div>
+      </div>
+
+      <nav class="mt-4 flex-1">
+        <ul class="space-y-8">
+          <li *ngFor="let link of links">
+            <a
+              [routerLink]="link.path"
+              routerLinkActive="bg-white/10 text-white"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="flex items-center gap-3 px-3 py-2 rounded text-slate-200 hover:bg-white/5 transition"
+              [innerHTML]="link.icon + '<span class=\'ml-2\'>' + link.label + '</span>'">
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="mt-auto">
+        <button (click)="logout()" class="w-full text-left px-3 py-2 rounded flex items-center gap-3 text-rose-300 hover:bg-white/5">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 17l5-5-5-5M21 12H9" stroke-width="1.5"/></svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Mobile overlay & sidebar -->
+    <div class="md:hidden">
+      <div class="flex items-center justify-between px-4 py-3 bg-transparent">
+        <div class="flex items-center gap-3">
+          <button (click)="toggleMobile()" class="p-2 rounded bg-white/10 text-white">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18" stroke-width="1.5"/></svg>
+          </button>
+          <div class="text-white font-semibold">Budget Tracker</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="text-sm text-slate-200">{{ auth.getToken() ? 'Signed in' : '' }}</div>
+        </div>
+      </div>
+
+      <!-- mobile sliding menu -->
+      <div *ngIf="mobileOpen" class="fixed inset-0 z-40">
+        <div (click)="toggleMobile()" class="absolute inset-0 bg-black/40"></div>
+        <aside class="relative w-64 bg-white p-4 h-full">
+          <div class="flex flex-col h-full">
+            <div class="mb-4">
+              <div class="text-lg font-semibold">Menu</div>
+            </div>
+            <nav class="flex-1">
+              <ul class="space-y-2">
+                <li *ngFor="let link of links">
+                  <a (click)="toggleMobile()" [routerLink]="link.path" class="block px-3 py-2 rounded hover:bg-gray-100">
+                    <span class="inline-block mr-2" [innerHTML]="link.icon"></span>{{ link.label }}
+                  </a>
+                </li>
+              </ul>
+            </nav>
+
+            <div class="mt-auto">
+              <button (click)="logout()" class="w-full text-left px-3 py-2 rounded bg-rose-100 text-rose-700">Logout</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <main class="flex-1 p-6">
+      <!-- Top bar -->
+      <header class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-4">
+          <h1 class="text-white text-2xl font-semibold hidden md:block">Dashboard</h1>
+          <!-- quick nav buttons -->
+          <div class="flex gap-4">
+            <a routerLink="/dashboard" class="px-3 py-1 rounded bg-white/10 text-white hover:bg-white/20">Home</a>
+            <a routerLink="/transactions" class="px-3 py-1 rounded bg-white/10 text-white hover:bg-white/20">Transactions</a>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 text-sm">
+          <div class="text-slate-200"><strong class="text-white">Hello</strong></div>
+        </div>
+      </header>
+
+      <!-- content outlet -->
+      <section class="bg-white rounded-xl shadow p-6 min-h-[60vh]">
+        <router-outlet></router-outlet>
+      </section>
+    </main>
+  </div>
+</div>
