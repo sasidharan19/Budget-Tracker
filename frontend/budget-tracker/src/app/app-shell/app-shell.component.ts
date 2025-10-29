@@ -1,4 +1,3 @@
-// src/app/app-shell.component.ts
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
@@ -29,11 +28,9 @@ export class AppShellComponent {
 
   logout() {
     this.auth.logout();
-    // navigate to login
     this.router.navigate(['/login']);
   }
 
-  // simple inline svg icons so you don't need external libs
   private iconDashboard() {
     return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 13h8V3H3v10zM13 21h8V11h-8v10zM13 3v6h8V3h-8zM3 21h8v-4H3v4z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   }

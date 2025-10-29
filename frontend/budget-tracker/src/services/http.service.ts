@@ -17,8 +17,8 @@ export class HttpService {
   get<T>(url: string, params?: HttpParams): Observable<T> {
     return this.http.get<T>(url, {
       headers: this.getAuthHeaders(),
-      params,        // optional
-      observe: 'body' // ensure we get Observable<T> instead of HttpEvent<T>
+      params,        
+      observe: 'body'
     });
   }
 

@@ -1,4 +1,3 @@
-// src/app/services/transaction.service.ts
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -23,7 +22,7 @@ export interface PagedResponse<T> {
   providedIn: 'root'
 })
 export class TransactionService {
-  private base = 'http://localhost:5000/api/transactions'; // replace with deployed API URL
+  private base = 'http://localhost:5000/api/transactions';
 
   constructor(private http: HttpService) {}
 

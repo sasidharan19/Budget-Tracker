@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       next: (s) => {
         this.summary = s;
         this.loading = false;
-        setTimeout(() => this.drawPieChart(), 0); // ensure view updated
+        setTimeout(() => this.drawPieChart(), 0);
       },
       error: () => (this.loading = false),
     });
@@ -112,12 +112,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       .text((d: any) => (d.data.categoryName ? `${d.data.categoryName}` : ''));
 
     // legend
-    // legend
     const legend = d3
       .select(container)
       .append('div')
-      .style('margin-top', '24px') // more space
-      .style('padding-top', '12px') // optional subtle padding
+      .style('margin-top', '24px')
+      .style('padding-top', '12px')
       .style('border-top', '1px solid #eee')
 
     legend

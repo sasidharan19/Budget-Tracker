@@ -1,4 +1,3 @@
-// src/app/transactions/transaction-list.component.ts
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TransactionService, TransactionDto } from '../../../services/transaction.service';

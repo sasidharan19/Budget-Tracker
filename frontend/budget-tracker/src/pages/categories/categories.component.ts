@@ -6,7 +6,7 @@ import { CategoryService, CategoryDto } from '../../services/category.service';
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // ✅ added CommonModule
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './categories.component.html',
 })
 export class CategoriesComponent implements OnInit {

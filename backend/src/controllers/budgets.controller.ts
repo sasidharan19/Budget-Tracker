@@ -27,7 +27,6 @@ export async function summary(req: Request, res: Response) {
       : new Date(new Date().getFullYear(), new Date().getMonth(), 1);
     const to = new Date(from.getFullYear(), from.getMonth() + 1, 0, 23, 59, 59);
 
-    // ✅ 1. Totals for the month
     const totals = await prisma.transaction.groupBy({
       by: ['type'],
       where: { userId, date: { gte: from, lte: to } },
@@ -37,13 +36,11 @@ export async function summary(req: Request, res: Response) {
     const income = totals.find((t) => t.type === 'income')?._sum?.amount ?? 0;
     const expense = totals.find((t) => t.type === 'expense')?._sum?.amount ?? 0;
 
-    // ✅ 2. Fetch budget (if set)
     const budget = await BudgetService.getBudgetForMonth(
       userId,
       `${from.getFullYear()}-${String(from.getMonth() + 1).padStart(2, '0')}`
     );
 
-    // ✅ 3. Group expenses by category for chart
     const expensesByCategory = await prisma.transaction.groupBy({
       by: ['categoryId'],
       where: {
@@ -54,7 +51,6 @@ export async function summary(req: Request, res: Response) {
       _sum: { amount: true },
     });
 
-    // ✅ 4. Get category names
     const categoryIds = expensesByCategory.map((e) => e.categoryId);
     const categories = await prisma.category.findMany({
       where: { id: { in: categoryIds } },
@@ -67,13 +63,12 @@ export async function summary(req: Request, res: Response) {
       amount: e._sum.amount ?? 0,
     }));
 
-    // ✅ 5. Final response
     res.json({
       income,
       expense,
       balance: income - expense,
       budget: budget?.amount ?? null,
-      byCategory, // 👈 this is for D3 pie chart
+      byCategory,
     });
   } catch (error) {
     console.error('Error in summary:', error);
