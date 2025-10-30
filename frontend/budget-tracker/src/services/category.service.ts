@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpService } from './http.service';
+import { environment } from '../environments/environment.prod';
 
 export interface CategoryDto {
   id?: number;
@@ -12,7 +13,7 @@ export interface CategoryDto {
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
   private http = inject(HttpService);
-  private base = 'http://localhost:5000/api/categories';
+  private base = `${environment.apiUrl}/categories`;
 
   getCategories(): Observable<CategoryDto[]> {
     return this.http.get<CategoryDto[]>(this.base);

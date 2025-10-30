@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpService } from './http.service';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment.prod';
 
 export interface CategorySummary {
   categoryId: number;
@@ -23,7 +24,7 @@ export interface SummaryDto {
 @Injectable({ providedIn: 'root' })
 export class SummaryService {
   private http = inject(HttpService);
-  private base = 'http://localhost:5000/api/budgets/summary';
+  private base = `${environment.apiUrl}/summary`;
 
   getSummary(month?: string): Observable<SummaryDto> {
     const url = month ? `${this.base}?month=${encodeURIComponent(month)}` : this.base;

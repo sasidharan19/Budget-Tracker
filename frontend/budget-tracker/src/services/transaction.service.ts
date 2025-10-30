@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpService } from './http.service';
+import { environment } from '../environments/environment.prod';
 
 export interface TransactionDto {
   id?: number;
@@ -22,7 +23,7 @@ export interface PagedResponse<T> {
   providedIn: 'root'
 })
 export class TransactionService {
-  private base = 'http://localhost:5000/api/transactions';
+  private base = `${environment.apiUrl}/transactions`;
 
   constructor(private http: HttpService) {}
 

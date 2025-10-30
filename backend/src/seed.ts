@@ -4,7 +4,7 @@ import "dotenv/config";
 
 async function main() {
   const username = "testuser";
-  const password = "password1234";
+  const password = "budgettracker";
 
   const exists = await prisma.user.findUnique({ where: { username } });
   if (!exists) {

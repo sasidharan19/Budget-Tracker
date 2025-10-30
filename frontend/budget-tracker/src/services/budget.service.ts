@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpService } from './http.service';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment.prod';
 
 export interface BudgetDto {
   id?: number;
@@ -12,7 +13,7 @@ export interface BudgetDto {
 @Injectable({ providedIn: 'root' })
 export class BudgetService {
   private http = inject(HttpService);
-  private base = 'http://localhost:5000/api/budgets';
+  private base = `${environment.apiUrl}/budgets`;
 
   getBudget(month: string): Observable<BudgetDto | null> {
     return this.http.get<BudgetDto | null>(`${this.base}?month=${encodeURIComponent(month)}`);
