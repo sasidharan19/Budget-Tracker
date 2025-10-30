@@ -24,7 +24,7 @@ export interface SummaryDto {
 @Injectable({ providedIn: 'root' })
 export class SummaryService {
   private http = inject(HttpService);
-  private base = `${environment.apiUrl}/summary`;
+  private base = `${environment.apiUrl}/budgets/summary`;
 
   getSummary(month?: string): Observable<SummaryDto> {
     const url = month ? `${this.base}?month=${encodeURIComponent(month)}` : this.base;
