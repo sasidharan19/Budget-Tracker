@@ -1,12 +1,12 @@
-# 📘 Product Requirements Document (PRD)
+# Product Requirements Document (PRD)
 ## Personal Budget Tracker Application
 
-### 📝 Overview
+### Overview
 The Personal Budget Tracker is a web-based application designed to help users track income, expenses, and categorize spending. The system provides financial insights, monthly budget comparison, and visual analytics to support personal financial discipline.
 
 ---
 
-### 🎯 Goals & Objectives
+### Goals & Objectives
 | Goal | Description |
 |------|------------|
 | Expense Tracking | Allow users to log & categorize expenses and income |
@@ -44,7 +44,7 @@ The Personal Budget Tracker is a web-based application designed to help users tr
 
 ---
 
-### 🧠 Assumptions
+### Assumptions
 | Assumption | Explanation |
 |------------|------------|
 | Single-user mode | No multi-user sharing of budgets/data |
@@ -53,7 +53,7 @@ The Personal Budget Tracker is a web-based application designed to help users tr
 
 ---
 
-### 📊 Success Metrics
+### Success Metrics
 | Metric | Target |
 |--------|--------|
 | Login success | <1 sec |
@@ -63,7 +63,7 @@ The Personal Budget Tracker is a web-based application designed to help users tr
 
 ---
 
-### 🛠️ Technical Stack
+### Technical Stack
 | Layer | Technology |
 |-------|------------|
 | Frontend | Angular 19 + Tailwind CSS |
@@ -76,14 +76,14 @@ The Personal Budget Tracker is a web-based application designed to help users tr
 
 ---
 
-### 🔐 Security Requirements
+### Security Requirements
 - Store JWT in session storage
 - Password hashed using bcrypt (server-side)
 - CORS enabled for production origin only
 
 ---
 
-### 🧪 Testing Scope
+### Testing Scope
 
 #### Manual Testing Areas
 - Login
@@ -94,7 +94,7 @@ The Personal Budget Tracker is a web-based application designed to help users tr
 
 ---
 
-### 🏗️ Deployment
+### Deployment
 | Component | Platform |
 |----------|----------|
 | Frontend | Vercel |
@@ -103,7 +103,7 @@ The Personal Budget Tracker is a web-based application designed to help users tr
 
 ---
 
-### 📦 Deliverables
+### Deliverables
 - Live hosted application
 - Source code on GitHub
 - Live hosted backend API, Postman collection

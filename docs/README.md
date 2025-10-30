@@ -1,18 +1,7 @@
 # Personal Budget Tracker
 
 A full-stack web application to track personal income and expenses, visualize spending, and manage monthly budgets.
-
 This project is made with **Angular, Node.js, MySQL, Prisma, D3.js, Railway and Vercel deployment, Tailwind CSS**.
-
----
-
-## Live Demo Links
-
-| Service | URL |
-|--------|-----|
-Frontend | https://budget-tracker-two-tan.vercel.app  
-Backend API | https://budget-tracker-production-58f5.up.railway.app  
-GitHub Repo | https://github.com/sasidharan19/Budget-Tracker  
 
 ---
 
@@ -24,6 +13,16 @@ Username | `testuser`
 Password | `budgettracker`  
 
 > Required for login access
+
+---
+
+## Live Demo Links
+
+| Service | URL |
+|--------|-----|
+Frontend | https://budget-tracker-two-tan.vercel.app  
+Backend API | https://budget-tracker-production-58f5.up.railway.app  
+GitHub Repo | https://github.com/sasidharan19/Budget-Tracker  
 
 ---
 
@@ -51,7 +50,7 @@ Deployment | Vercel (Frontend), Railway (Backend + DB)
 
 ---
 
-## 📦 Installation Guide
+## Installation Guide
 
 ### ✅ Prerequisites
 - Node.js 18+
@@ -91,9 +90,9 @@ npm start
 
 ---
 
-## 🧪 Testing
+## Testing
 
-### ✅ Manual Testing Checklist
+### Manual Testing Checklist
 
 | Area | Test Performed | Result |
 |------|----------------|--------|
@@ -119,12 +118,12 @@ Responsive UI | Tested on desktop & mobile | ✅ Responsive
 
 ---
 
-## 🤖 LLM Usage
+## LLM Usage
 
-### ⚙️ Tools Used
+### Tools Used
 - **ChatGPT** — for guidance on architecture, code snippets and debugging support.
 
-### 📌 AI Involvement
+### AI Involvement
 AI was used for:
 - Understanding feature requirements
 - Providing example code snippets for Angular & Node.js
@@ -132,28 +131,28 @@ AI was used for:
 - Helping draft documentation (README, usage notes, testing guide)
 - Clarifying best practices for deployment & API structure
 
-### 🚫 What AI Did *Not* Do
+### What AI Did *Not* Do
 - Did *not* write the full project code
 - Did *not* handle deployment
 - Did *not* generate database data
 - No sensitive project information was shared
 
-### ✅ Developer Contribution
+### Developer Contribution
 All application code, logic implementation, debugging, testing, and deployment were done by the developer.  
 LLM was used only as an assistant for reference and learning.
 
 ---
 
-## 📡 API Endpoints
+## API Endpoints
 
-### 🔐 Authentication
+### Authentication
 | Method | Endpoint        | Description      |
 | ------ | ----------------| ---------------- |
 | POST   | `/auth/login`   | Login user       |
 
 ---
 
-### 💰 Transactions
+### Transactions
 | Method | Endpoint                   | Description                    |
 | ------ | -------------------------- | ------------------------------ |
 | GET    | `/transactions`            | Get all transactions           |
@@ -162,12 +161,12 @@ LLM was used only as an assistant for reference and learning.
 | PUT    | `/transactions/:id`        | Update transaction             |
 | DELETE | `/transactions/:id`        | Delete transaction             |
 
-✅ Supports filters & pagination via query params:  
+Supports filters & pagination via query params:  
 `?page=1&pageSize=10&category=Food&month=2025-02`
 
 ---
 
-### 🏷️ Categories
+### Categories
 | Method | Endpoint         | Description             |
 | ------ | ---------------- | ----------------------- |
 | GET    | `/categories`    | Get all categories      |
@@ -177,7 +176,7 @@ LLM was used only as an assistant for reference and learning.
 
 ---
 
-### 🎯 Budget
+### Budget
 | Method | Endpoint      | Description                             |
 | ------ | ------------- | --------------------------------------- |
 | GET    | `/budget`     | Get current month budget & usage        |
@@ -186,7 +185,7 @@ LLM was used only as an assistant for reference and learning.
 
 ---
 
-### 📊 Summary & Analytics
+### Summary & Analytics
 | Method | Endpoint                     | Description                   |
 | ------ | -----------------------------| ----------------------------- |
 | GET    | `/summary?month=YYYY-MM`     | Get monthly summary (income, expense, balance) |
@@ -212,10 +211,7 @@ LLM was used only as an assistant for reference and learning.
 > The backend for this project was implemented using **Node.js (Express)** instead of **Django REST Framework**, therefore a **DRF Browsable API** interface is **not applicable** for this project.  
 > 
 > As an alternative, the following resources have been provided for evaluation:
+ **Live hosted backend API**  
+ **Postman Collection** 
+**Live deployed frontend**  **Full GitHub source code**
 > 
-> ✅ **Live hosted backend API**  
-> ✅ **Postman Collection** 
-> ✅ **Live deployed frontend**  
-> ✅ **Full GitHub source code**
-> 
-> Additionally, **Swagger UI documentation** can be enabled for the deployed backend if required.
