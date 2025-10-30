@@ -111,15 +111,15 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       .style('font-size', '10px')
       .text((d: any) => (d.data.categoryName ? `${d.data.categoryName}` : ''));
 
-    // legend
-    const legend = d3
-      .select(container)
-      .append('div')
-      .style('margin-top', '24px')
-      .style('padding-top', '12px')
-      .style('border-top', '1px solid #eee')
+    const legendContainer = d3
+      .select('#pieLegend')
+      .style('display', 'flex')
+      .style('flex-direction', 'column')
+      .style('gap', '6px');
 
-    legend
+    legendContainer.selectAll('*').remove();
+
+    legendContainer
       .selectAll('div')
       .data(data)
       .enter()
@@ -133,7 +133,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         el.append('div')
           .style('width', '12px')
           .style('height', '12px')
-          .style('background', color(String(i)));
+          .style('background', color(String(i)))
+          .style('border-radius', '3px');
+
         el.append('div').text(`${d.categoryName} — ${d.amount}`);
       });
   }
