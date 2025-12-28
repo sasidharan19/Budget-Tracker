@@ -206,12 +206,3 @@ Supports filters & pagination via query params:
 **Sasidharan Senthilkumar**
 
 ---
-
-> **Note:**  
-> The backend for this project was implemented using **Node.js (Express)** instead of **Django REST Framework**, therefore a **DRF Browsable API** interface is **not applicable** for this project.  
-> 
-> As an alternative, the following resources have been provided for evaluation:
- **Live hosted backend API**  
- **Postman Collection** 
-**Live deployed frontend**  **Full GitHub source code**
-> 
